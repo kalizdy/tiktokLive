@@ -1868,35 +1868,6 @@ footer h3 {
     font-size: 22px;
 }
 
-.footer-nota {
-    color: #909090;
-    font-size: 10px;
-}
-
-.creditos {
-    max-width: 720px;
-    margin: 10px auto 0;
-    text-align: left;
-    font-size: 11px;
-    color: #999;
-}
-
-.creditos summary {
-    cursor: pointer;
-    text-align: center;
-    color: #aaa;
-}
-
-.creditos ul {
-    margin: 10px 0 8px 18px;
-    display: grid;
-    gap: 4px;
-}
-
-.creditos p {
-    line-height: 1.5;
-}
-
 
 /* =================================
    TOASTS
