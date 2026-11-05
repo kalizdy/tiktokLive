@@ -34,7 +34,7 @@
             precio: 8900,
             stock: 6,
             descripcion: "Ágil, económica y perfecta para la ciudad.",
-            imagen: "img/urban-150.jpg",
+            imagen: "urban-150.jpg",
             alt: "Motocicleta Yamaha YBR 125 roja de perfil",
             emoji: "🛵",
             activo: true
@@ -47,7 +47,7 @@
             precio: 7500,
             stock: 5,
             descripcion: "Scooter automática para moverte sin esfuerzo.",
-            imagen: "img/scooter-city-125.jpg",
+            imagen: "scooter-city-125.jpg",
             alt: "Scooter Honda PCX 150 marrón de perfil",
             emoji: "🛵",
             activo: true
@@ -60,7 +60,7 @@
             precio: 11900,
             stock: 4,
             descripcion: "Diseño deportivo, automática y gran autonomía.",
-            imagen: "img/scooter-sport-155.jpg",
+            imagen: "scooter-sport-155.jpg",
             alt: "Scooter Yamaha NMAX 155 vista frontal",
             emoji: "🛵",
             activo: true
@@ -73,7 +73,7 @@
             precio: 12500,
             stock: 5,
             descripcion: "Preparada para caminos de tierra y aventuras.",
-            imagen: "img/trail-200.jpg",
+            imagen: "trail-200.jpg",
             alt: "Moto Yamaha XTZ 250 Tenere blanca y roja",
             emoji: "🏍️",
             activo: true
@@ -86,7 +86,7 @@
             precio: 15900,
             stock: 3,
             descripcion: "Suspensión reforzada para terrenos exigentes.",
-            imagen: "img/enduro-250.jpg",
+            imagen: "enduro-250.jpg",
             alt: "Moto Honda Tornado negra de perfil",
             emoji: "🏍️",
             activo: true
@@ -99,7 +99,7 @@
             precio: 17900,
             stock: 4,
             descripcion: "Diseño deportivo y gran potencia para la carretera.",
-            imagen: "img/sport-250.jpg",
+            imagen: "sport-250.jpg",
             alt: "Moto Honda CBR 250 RR roja de perfil",
             emoji: "🏍️",
             activo: true
@@ -112,7 +112,7 @@
             precio: 14500,
             stock: 4,
             descripcion: "Estilo naked, posición cómoda y respuesta inmediata.",
-            imagen: "img/naked-200.jpg",
+            imagen: "naked-200.jpg",
             alt: "Moto Megelli naked roja y negra sobre fondo blanco",
             emoji: "🏍️",
             activo: true
@@ -125,7 +125,7 @@
             precio: 21900,
             stock: 3,
             descripcion: "Confort y presencia para viajes largos.",
-            imagen: "img/cruiser-300.jpg",
+            imagen: "cruiser-300.jpg",
             alt: "Moto Yamaha XV1600 Wild Star roja sobre fondo blanco",
             emoji: "🏍️",
             activo: true
@@ -138,7 +138,7 @@
             precio: 27900,
             stock: 2,
             descripcion: "Lista para viajar con equipaje y explorar sin límites.",
-            imagen: "img/adventure-400.jpg",
+            imagen: "adventure-400.jpg",
             alt: "Moto KTM Adventure naranja con maletas laterales",
             emoji: "🏍️",
             activo: true
