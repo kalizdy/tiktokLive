@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MotoLegend: catálogo de motocicletas, pedidos rápidos y confirmación por WhatsApp.">
+    <meta name="theme-color" content="#ff6b00">
+
+    <title>MotoLegend | Compra tu motocicleta</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="marca">
+            <div class="logo">🏍️ MOTO<span>LEGEND</span></div>
+            <p class="eslogan">POTENCIA • LIBERTAD • AVENTURA</p>
+        </div>
+
+        <div class="header-acciones">
+
+            <span class="estado">🟢 EN LÍNEA</span>
+
+            <button class="btn-header" id="openOrders" type="button">
+                📋 Mis pedidos <span class="badge" id="ordersBadge">0</span>
+            </button>
+
+            <button class="btn-header btn-carrito" id="openCart" type="button">
+                🛒 Carrito <span class="badge" id="cartCount">0</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="estadisticas">
+        <span>📦 <b id="misPedidos">0</b> <span id="misPedidosLabel">pedidos</span></span>
+        <span>❤️ <b id="contadorLikes">0</b> favoritos</span>
+        <span>💰 <b id="totalPedidos">Bs 0</b> en pedidos</span>
+    </div>
+
+</header>
+
+
+<main id="liveContainer">
+
+    <!-- PORTADA -->
+
+    <section class="hero">
+
+        <p class="etiqueta">COMPRA DIRECTA POR TIKTOK Y WHATSAPP</p>
+
+        <h1>
+            ENCUENTRA TU
+            <span>PRÓXIMA MOTO</span>
+        </h1>
+
+        <p>
+            Catálogo en vivo, pedido en menos de un minuto
+            y confirmación directa por WhatsApp.
+        </p>
+
+        <div class="hero-acciones">
+
+            <a href="#catalogo" class="btn-hero">
+                EXPLORAR MOTOS
+            </a>
+
+            <button type="button" class="btn-hero btn-hero-secundario" id="heroQuickOrder">
+                ⚡ PEDIDO RÁPIDO
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- LIVE -->
+
+    <section class="live-panel" id="livePanel" aria-labelledby="liveTitle">
+
+        <div class="live-head">
+
+            <div class="live-head-info">
+                <span class="live-dot" aria-hidden="true"></span>
+                <strong>EN VIVO</strong>
+                <span class="live-viewers">👀 1.2K viendo</span>
+            </div>
+
+            <div class="live-metrics">
+                ❤️ <b id="liveLikes">0</b> likes
+            </div>
+
+        </div>
+
+        <div class="live-layout">
+
+            <div class="live-main">
+
+                <div
+                    class="live-stage"
+                    id="liveStage"
+                    data-live-like
+                    title="Doble clic para enviar corazones al live"
+                >
+                    <div class="live-overlay">
+                        <span class="live-badge">🔴 OFERTA RELÁMPAGO</span>
+                        <h2 id="liveTitle">Compra en vivo y llévate tu moto</h2>
+                        <p>
+                            Doble clic en la pantalla para enviar corazones
+                            o elige una de las ofertas destacadas.
+                        </p>
+                        <button type="button" class="btn-hero" data-live-action="live-like">
+                            ❤️ Enviar corazones
+                        </button>
+                    </div>
+                    <span class="live-hint">💗 Doble clic aquí</span>
+                </div>
+
+                <div class="live-ofertas-head">
+                    <h3>🔥 Ofertas destacadas del live</h3>
+                    <span class="subtitulo">Toca “Comprar en vivo” para agregarla al carrito.</span>
+                </div>
+
+                <div class="live-ofertas" id="liveOfertas"></div>
+
+            </div>
+
+            <aside class="live-side">
+
+                <div class="live-chat">
+
+                    <h3>💬 Chat del live</h3>
+
+                    <div class="live-chat-mensajes" id="liveChatMensajes" aria-live="polite">
+                        <p class="live-chat-sistema">
+                            Bienvenido al live. Pregunta por precios, stock o entregas.
+                        </p>
+                    </div>
+
+                    <div class="live-chat-entrada">
+                        <label class="sr-only" for="chatInput">Comentario para el live</label>
+                        <input
+                            type="text"
+                            id="chatInput"
+                            maxlength="200"
+                            placeholder="Escribe un comentario..."
+                            autocomplete="off"
+                        >
+                        <button type="button" id="liveChatSend" class="btn-primario">Enviar</button>
+                    </div>
+
+                </div>
+
+                <form id="orderForm" class="live-order-form" novalidate>
+
+                    <h3>⚡ Compra rápida en vivo</h3>
+
+                    <div class="campo">
+                        <label for="liveProductSelect">Producto</label>
+                        <select id="liveProductSelect"></select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="variantSelect">Variante</label>
+                        <select id="variantSelect">
+                            <option value="estandar">Estándar (+ Bs 0)</option>
+                            <option value="casco">Con casco y guantes (+ Bs 500)</option>
+                            <option value="full">Full equipo (+ Bs 1.200)</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="userTikTok">Usuario de TikTok *</label>
+                        <input
+                            type="text"
+                            id="userTikTok"
+                            maxlength="31"
+                            placeholder="@usuario_live"
+                            autocomplete="off"
+                            aria-describedby="err-userTikTok"
+                            required
+                        >
+                        <small class="error" id="err-userTikTok"></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="livePhone">Teléfono *</label>
+                        <input
+                            type="tel"
+                            id="livePhone"
+                            maxlength="15"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            placeholder="Ej. 71234567"
+                            autocomplete="tel"
+                            aria-describedby="err-livePhone"
+                            required
+                        >
+                        <small class="error" id="err-livePhone"></small>
+                    </div>
+
+                    <div class="live-total">
+                        <span>Total</span>
+                        <strong id="liveOrderTotal">Bs 0</strong>
+                    </div>
+
+                    <button type="submit" class="btn-primario">
+                        ⚡ Confirmar compra en vivo
+                    </button>
+
+                    <p class="nota">
+                        Se registra como retiro en tienda (La Paz) y pago en efectivo.
+                        Luego puedes coordinar por WhatsApp.
+                    </p>
+
+                </form>
+
+            </aside>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATALOGO -->
+
+    <section id="catalogo">
+
+        <div class="seccion-head">
+
+            <div>
+                <h2>🏍️ Nuestro catálogo</h2>
+                <p class="subtitulo">Filtra, elige y compra desde el live.</p>
+            </div>
+
+            <span class="resultado-count" id="resultadoCount" aria-live="polite"></span>
+
+        </div>
+
+        <div class="catalogo-toolbar">
+
+            <div class="buscador-wrap">
+                <label class="sr-only" for="buscador">Buscar motocicleta</label>
+                <input
+                    type="search"
+                    id="buscador"
+                    placeholder="🔎 Nombre, categoría o código (ej. ML-URB)"
+                    autocomplete="off"
+                >
+            </div>
+
+            <label class="sr-only" for="orden">Ordenar catálogo</label>
+
+            <select id="orden">
+                <option value="relevancia">Ordenar: destacadas</option>
+                <option value="precio-asc">Precio: menor a mayor</option>
+                <option value="precio-desc">Precio: mayor a menor</option>
+                <option value="nombre">Nombre: A–Z</option>
+            </select>
+
+        </div>
+
+        <div class="chips" id="categorias" role="group" aria-label="Filtrar por categoría"></div>
+
+        <section class="productos" id="productos" aria-live="polite"></section>
+
+        <div class="sin-resultados" id="sinResultados" hidden>
+            <p>😕 No encontramos motos con ese filtro.</p>
+            <button type="button" class="btn-secundario" data-action="reset-filters">
+                Ver todo el catálogo
+            </button>
+        </div>
+
+    </section>
+
+
+    <!-- PASOS -->
+
+    <section class="pasos">
+
+        <h2>Comprar en el live es así de simple</h2>
+
+        <ol>
+            <li><b>1.</b> Elige la moto y agrégala al carrito.</li>
+            <li><b>2.</b> Completa los datos del cliente y confirma.</li>
+            <li><b>3.</b> Envía el pedido por WhatsApp y listo.</li>
+        </ol>
+
+    </section>
+
+
+    <!-- AYUDA -->
+
+    <section class="seccion-chat" id="ayuda">
+
+        <h2>💬 Preguntas frecuentes</h2>
+
+        <p class="subtitulo">
+            Respuestas inmediatas y contacto directo por WhatsApp.
+        </p>
+
+        <div class="faq-botones">
+            <button type="button" data-action="faq" data-q="precio">💰 Precios</button>
+            <button type="button" data-action="faq" data-q="ubicacion">📍 Ubicación</button>
+            <button type="button" data-action="faq" data-q="horario">🕒 Horario</button>
+            <button type="button" data-action="faq" data-q="garantia">🛡️ Garantía</button>
+            <button type="button" data-action="faq" data-q="pago">💳 Formas de pago</button>
+            <button type="button" data-action="faq" data-q="envio">🛵 Envíos</button>
+        </div>
+
+        <div class="faq-respuesta" id="faqRespuesta" aria-live="polite" hidden></div>
+
+        <a class="btn-wa" id="waGeneral" href="#" target="_blank" rel="noopener">
+            💬 Escribir por WhatsApp
+        </a>
+
+    </section>
+
+
+    <!-- BITACORA -->
+
+    <section class="seccion-bitacora">
+
+        <div class="bitacora-head">
+
+            <div>
+                <h2>📊 Bitácora del live</h2>
+                <p class="subtitulo">Interacciones, compras y actividad registradas en este navegador.</p>
+            </div>
+
+            <div class="bitacora-acciones">
+
+                <label class="sr-only" for="logFiltro">Filtrar actividad</label>
+
+                <select id="logFiltro">
+                    <option value="todos">Todo</option>
+                    <option value="venta">Compras</option>
+                    <option value="live">Live</option>
+                    <option value="carrito">Carrito</option>
+                    <option value="favorito">Favoritos</option>
+                    <option value="validacion">Validaciones</option>
+                    <option value="sistema">Sistema</option>
+                </select>
+
+                <button type="button" id="exportLog" class="btn-mini">Exportar</button>
+                <button type="button" id="clearLog" class="btn-mini">Limpiar</button>
+
+            </div>
+
+        </div>
+
+        <div id="logOutput" class="log-output" aria-live="polite"></div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <h3>MOTOLEGEND 🏍️</h3>
+
+    <p>Potencia, libertad y aventura.</p>
+
+    <p>© <span id="anio">2026</span> MotoLegend. Todos los derechos reservados.</p>
+
+    <p class="footer-nota">
+        Tus datos se guardan solo en este navegador. No se envían a ningún servidor.
+    </p>
+
+    <details class="creditos">
+        <summary>Créditos de las imágenes</summary>
+        <ul>
+            <li>Yamaha YBR 125 — Kyrylo Danylchenko (dominio público).</li>
+            <li>Honda PCX 150 — M.rJirapat (CC BY-SA 4.0).</li>
+            <li>Yamaha NMAX 155 — Corvettec6r (CC BY-SA 4.0).</li>
+            <li>Yamaha XTZ 250 Tenere — Ashwalk (CC BY-SA 4.0).</li>
+            <li>Honda Tornado — Alan1997 (CC BY-SA 3.0).</li>
+            <li>Honda CBR 250 RR — Ganesh Mohan T (CC BY-SA 4.0).</li>
+            <li>Megelli Naked — Simon Brown (CC BY 3.0).</li>
+            <li>Yamaha XV1600 Wild Star — Jacek Halicki (CC BY-SA 4.0).</li>
+            <li>KTM Adventure — winkyintheuk (CC BY 2.0).</li>
+        </ul>
+        <p>
+            Fotografías obtenidas de Wikimedia Commons con fines ilustrativos.
+            Los nombres comerciales del catálogo no corresponden necesariamente
+            al modelo exacto de cada fotografía.
+        </p>
+    </details>
+
+</footer>
+
+
+<!-- ============================
+     CARRITO
+============================= -->
+
+<dialog id="cartDialog" class="dialog" aria-labelledby="cartTitle">
+
+    <div class="dialog-head">
+        <h2 id="cartTitle">🛒 Mi carrito</h2>
+        <button type="button" class="btn-cerrar" data-action="close" aria-label="Cerrar carrito">✕</button>
+    </div>
+
+    <div class="dialog-body">
+
+        <div id="cartItems" class="cart-items"></div>
+
+        <div class="cart-resumen">
+            <div class="resumen-linea resumen-total">
+                <span>Total</span>
+                <strong id="cartTotal">Bs 0</strong>
+            </div>
+            <small>El descuento se aplica en el siguiente paso.</small>
+        </div>
+
+        <div class="dialog-acciones">
+            <button type="button" class="btn-secundario" id="clearCartBtn" data-action="clear-cart">
+                🗑️ Vaciar
+            </button>
+            <button type="button" class="btn-primario" id="checkoutBtn" data-action="checkout">
+                Continuar pedido →
+            </button>
+        </div>
+
+    </div>
+
+</dialog>
+
+
+<!-- ============================
+     CHECKOUT
+============================= -->
+
+<dialog id="checkoutDialog" class="dialog dialog-ancho" aria-labelledby="checkoutTitle">
+
+    <div class="dialog-head">
+        <h2 id="checkoutTitle">📝 Datos del pedido</h2>
+        <button type="button" class="btn-cerrar" data-action="close" aria-label="Cerrar formulario">✕</button>
+    </div>
+
+    <form id="checkoutForm" novalidate>
+
+        <div id="checkoutErrors" class="resumen-errores" role="alert" hidden></div>
+
+        <div class="checkout-layout">
+
+            <div class="checkout-campos">
+
+                <div class="campo">
+                    <label for="cliente">Nombre completo *</label>
+                    <input
+                        type="text"
+                        id="cliente"
+                        name="cliente"
+                        maxlength="50"
+                        minlength="4"
+                        autocomplete="name"
+                        placeholder="Ej. María Pérez"
+                        aria-describedby="err-cliente"
+                        required
+                    >
+                    <small class="error" id="err-cliente"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="telefono">Número de teléfono *</label>
+                    <input
+                        type="tel"
+                        id="telefono"
+                        name="telefono"
+                        maxlength="15"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        autocomplete="tel"
+                        placeholder="Ej. 71234567"
+                        aria-describedby="err-telefono"
+                        required
+                    >
+                    <small class="error" id="err-telefono"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="email">Correo electrónico (opcional)</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        maxlength="100"
+                        autocomplete="email"
+                        placeholder="Ej. nombre@correo.com"
+                        aria-describedby="err-email"
+                    >
+                    <small class="error" id="err-email"></small>
+                </div>
+
+                <fieldset class="campo" id="entregaGroup">
+                    <legend class="campo-titulo">¿Cómo recibes tu moto? *</legend>
+                    <div class="radios">
+                        <label class="radio">
+                            <input type="radio" name="entrega" value="retiro" checked>
+                            <span>🏪 Retiro en tienda</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="entrega" value="envio">
+                            <span>🛵 Envío a domicilio</span>
+                        </label>
+                    </div>
+                    <small class="error" id="err-entrega"></small>
+                </fieldset>
+
+                <div class="envio-fields" id="envioFields" hidden>
+
+                    <div class="campo">
+                        <label for="ciudad">Ciudad *</label>
+                        <select id="ciudad" aria-describedby="err-ciudad">
+                            <option value="">Selecciona tu ciudad</option>
+                            <option value="La Paz">La Paz</option>
+                            <option value="El Alto">El Alto</option>
+                            <option value="Santa Cruz">Santa Cruz</option>
+                            <option value="Cochabamba">Cochabamba</option>
+                            <option value="Sucre">Sucre</option>
+                            <option value="Tarija">Tarija</option>
+                            <option value="Oruro">Oruro</option>
+                            <option value="Potosí">Potosí</option>
+                            <option value="Beni">Beni</option>
+                            <option value="Pando">Pando</option>
+                        </select>
+                        <small class="error" id="err-ciudad"></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="direccion">Dirección de entrega *</label>
+                        <input
+                            type="text"
+                            id="direccion"
+                            maxlength="120"
+                            minlength="10"
+                            autocomplete="street-address"
+                            placeholder="Ej. Av. Cristo Redentor #123, zona Norte"
+                            aria-describedby="err-direccion"
+                        >
+                        <small class="error" id="err-direccion"></small>
+                    </div>
+
+                </div>
+
+                <div class="campo">
+                    <label for="pago">Forma de pago *</label>
+                    <select id="pago" aria-describedby="err-pago">
+                        <option value="">Selecciona una opción</option>
+                        <option value="efectivo">Efectivo contra entrega</option>
+                        <option value="transferencia">Transferencia / QR</option>
+                    </select>
+                    <small class="error" id="err-pago"></small>
+                </div>
+
+                <div class="campo" id="referenciaField" hidden>
+                    <label for="referencia">Número de comprobante *</label>
+                    <input
+                        type="text"
+                        id="referencia"
+                        maxlength="20"
+                        placeholder="Ej. 00123456"
+                        aria-describedby="err-referencia"
+                    >
+                    <small class="error" id="err-referencia"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="codigo">Código de descuento (opcional)</label>
+                    <input
+                        type="text"
+                        id="codigo"
+                        maxlength="20"
+                        placeholder="Ej. TIKTOK10"
+                        autocomplete="off"
+                        aria-describedby="err-codigo"
+                    >
+                    <small class="error" id="err-codigo"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="fecha">Fecha preferida de entrega (opcional)</label>
+                    <input type="date" id="fecha" aria-describedby="err-fecha">
+                    <small class="error" id="err-fecha"></small>
+                </div>
+
+                <div class="campo">
+                    <label class="terminos">
+                        <input type="checkbox" id="terminos">
+                        <span>Acepto los términos y el uso de mis datos para coordinar el pedido. *</span>
+                    </label>
+                    <small class="error" id="err-terminos"></small>
+                </div>
+
+                <div class="hp" aria-hidden="true">
+                    <label for="website">No llenar este campo</label>
+                    <input type="text" id="website" tabindex="-1" autocomplete="off">
+                </div>
+
+            </div>
+
+            <aside class="checkout-resumen">
+
+                <h3>Resumen del pedido</h3>
+
+                <ul id="checkoutItems" class="resumen-items"></ul>
+
+                <div class="resumen-linea">
+                    <span>Subtotal</span>
+                    <strong id="checkoutSubtotal">Bs 0</strong>
+                </div>
+
+                <div class="resumen-linea" id="descuentoRow" hidden>
+                    <span id="descuentoLabel">Descuento</span>
+                    <strong id="checkoutDescuento">- Bs 0</strong>
+                </div>
+
+                <div class="resumen-linea resumen-total">
+                    <span>Total</span>
+                    <strong id="checkoutTotal">Bs 0</strong>
+                </div>
+
+                <p class="nota">
+                    El pedido se confirma por WhatsApp con el equipo de MotoLegend.
+                </p>
+
+            </aside>
+
+        </div>
+
+        <div class="dialog-acciones">
+            <button type="button" class="btn-secundario" data-action="close">Cancelar</button>
+            <button type="submit" class="btn-primario" id="submitOrder">✅ Confirmar pedido</button>
+        </div>
+
+    </form>
+
+</dialog>
+
+
+<!-- ============================
+     PEDIDO CONFIRMADO
+============================= -->
+
+<dialog id="orderDialog" class="dialog dialog-ancho" aria-labelledby="orderTitle">
+
+    <div class="dialog-head">
+        <h2 id="orderTitle">✅ Pedido registrado</h2>
+        <button type="button" class="btn-cerrar" data-action="close" aria-label="Cerrar comprobante">✕</button>
+    </div>
+
+    <div class="dialog-body">
+
+        <p class="order-ok">
+            Guarda este número de pedido y compártelo por WhatsApp para coordinarlo.
+        </p>
+
+        <div id="ticketContainer"></div>
+
+        <div class="dialog-acciones wrap">
+            <button type="button" class="btn-wa" data-action="wa-ticket">💬 Enviar por WhatsApp</button>
+            <button type="button" class="btn-secundario" data-action="copy-ticket">📋 Copiar</button>
+            <button type="button" class="btn-secundario" data-action="print-ticket">🖨️ Imprimir</button>
+            <button type="button" class="btn-primario" data-action="close">Listo</button>
+        </div>
+
+    </div>
+
+</dialog>
+
+
+<!-- ============================
+     HISTORIAL DE PEDIDOS
+============================= -->
+
+<dialog id="ordersDialog" class="dialog dialog-ancho" aria-labelledby="ordersTitle">
+
+    <div class="dialog-head">
+        <h2 id="ordersTitle">📋 Mis pedidos</h2>
+        <button type="button" class="btn-cerrar" data-action="close" aria-label="Cerrar pedidos">✕</button>
+    </div>
+
+    <div class="dialog-body">
+
+        <p class="orders-resumen" id="ordersResumen"></p>
+
+        <div class="orders-toolbar">
+
+            <label class="sr-only" for="orderFilter">Filtrar pedidos</label>
+
+            <select id="orderFilter">
+                <option value="todos">Todos</option>
+                <option value="hoy">Solo hoy</option>
+                <option value="pendiente">Pendientes</option>
+                <option value="confirmado">Confirmados</option>
+                <option value="entregado">Entregados</option>
+            </select>
+
+        </div>
+
+        <div id="ordersList" class="orders-list"></div>
+
+        <details class="avanzado">
+            <summary>Opciones avanzadas</summary>
+            <div class="avanzado-acciones">
+                <button type="button" class="btn-mini" data-action="export-csv">⬇️ CSV</button>
+                <button type="button" class="btn-mini" data-action="export-json">⬇️ JSON</button>
+                <button type="button" class="btn-mini" data-action="import-json">⬆️ Importar</button>
+                <button type="button" class="btn-secundario" data-action="reset-stock">
+                    ♻️ Restablecer stock
+                </button>
+                <button type="button" class="btn-danger" data-action="clear-all">
+                    🗑️ Borrar todos los datos
+                </button>
+            </div>
+        </details>
+
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
+
+    </div>
+
+</dialog>
+
+
+<!-- ============================
+     CONFIRMACION GENERICA
+============================= -->
+
+<dialog id="confirmDialog" class="dialog" aria-labelledby="confirmTitle">
+
+    <div class="dialog-head">
+        <h2 id="confirmTitle">Confirmar</h2>
+    </div>
+
+    <div class="dialog-body">
+        <p id="confirmMessage"></p>
+
+        <div class="dialog-acciones">
+            <button type="button" class="btn-secundario" id="confirmCancel">Cancelar</button>
+            <button type="button" class="btn-danger" id="confirmAccept">Confirmar</button>
+        </div>
+    </div>
+
+</dialog>
+
+
+<!-- ============================
+     TEMPLATES
+============================= -->
+
+<template id="tpl-producto">
+    <article class="producto">
+
+        <div class="imagen-producto">
+            <img data-imagen alt="" loading="lazy" decoding="async">
+            <span class="imagen-fallback" data-emoji hidden>🏍️</span>
+        </div>
+
+        <div class="producto-meta">
+            <span class="categoria" data-cat></span>
+            <span class="codigo" data-codigo></span>
+        </div>
+
+        <h3 data-nombre></h3>
+
+        <p data-desc></p>
+
+        <p class="precio" data-precio></p>
+
+        <p class="stock" data-stock></p>
+
+        <div class="acciones-producto">
+            <button type="button" class="btn-oferta" data-action="add">🛒 Agregar</button>
+            <button type="button" class="btn-comprar" data-action="buy">⚡ Comprar ahora</button>
+            <button type="button" class="btn-favorito" data-action="fav" aria-pressed="false">❤️ Favorito</button>
+        </div>
+
+    </article>
+</template>
+
+
+<template id="tpl-cart-item">
+    <div class="item-carrito">
+
+        <div class="item-datos">
+            <strong data-nombre></strong>
+            <small data-unitario></small>
+        </div>
+
+        <div class="stepper">
+            <button type="button" data-action="qty-minus" aria-label="Quitar una unidad">−</button>
+            <span data-cantidad></span>
+            <button type="button" data-action="qty-plus" aria-label="Agregar una unidad">+</button>
+        </div>
+
+        <div class="item-fin">
+            <strong data-subtotal></strong>
+            <button type="button" class="btn-eliminar" data-action="remove" aria-label="Eliminar del carrito">✕</button>
+        </div>
+
+    </div>
+</template>
+
+
+<template id="tpl-pedido">
+    <article class="pedido">
+
+        <div class="pedido-top">
+            <strong data-num></strong>
+            <span class="chip-estado" data-estado></span>
+        </div>
+
+        <p class="pedido-cliente" data-cliente></p>
+        <p class="pedido-detalle" data-detalle></p>
+
+        <div class="pedido-bottom">
+            <strong class="pedido-total" data-total></strong>
+            <div class="pedido-acciones">
+                <button type="button" class="btn-mini" data-action="wa-order">💬 WhatsApp</button>
+                <button type="button" class="btn-mini btn-mini-peligro" data-action="del-order">🗑️</button>
+            </div>
+        </div>
+
+        <label class="pedido-estado-label">
+            Estado
+            <select class="select-mini" data-action="status"></select>
+        </label>
+
+    </article>
+</template>
+
+
+<template id="tpl-ticket">
+    <div class="ticket">
+
+        <div class="ticket-cabecera">
+            <strong>🏍️ MOTO<span>LEGEND</span></strong>
+            <span data-num></span>
+        </div>
+
+        <ul class="ticket-items" data-items></ul>
+
+        <div class="ticket-totales">
+            <p><span>Subtotal</span><strong data-subtotal></strong></p>
+            <p data-desc-row hidden>
+                <span data-desc-label>Descuento</span>
+                <strong data-descuento></strong>
+            </p>
+            <p class="ticket-total"><span>Total</span><strong data-total></strong></p>
+        </div>
+
+        <div class="ticket-datos">
+            <p><span>Cliente</span><strong data-cliente></strong></p>
+            <p><span>Teléfono</span><strong data-telefono></strong></p>
+            <p><span>Entrega</span><strong data-entrega></strong></p>
+            <p><span>Pago</span><strong data-pago></strong></p>
+            <p data-fecha-row hidden><span>Fecha preferida</span><strong data-fecha></strong></p>
+        </div>
+
+        <p class="ticket-pie">
+            Gracias por tu compra. Conserva este número de pedido.
+        </p>
+
+    </div>
+</template>
+
+
+<div id="printArea" aria-hidden="true"></div>
+
+<div id="toasts" class="toasts" popover="manual" aria-live="polite" aria-atomic="false"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
